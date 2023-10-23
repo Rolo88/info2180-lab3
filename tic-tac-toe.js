@@ -1,9 +1,13 @@
 window.onload = function () {
     const board = document.getElementById('board');
     const status = document.getElementById('status');
+    const restartButton = document.querySelector('.btn'); // Select the button by its class
     const gameState = new Array(9).fill('');
     let currentPlayer = 'X';
     let gameOver = false;
+  
+    // Set the initial status message
+    status.textContent = 'Move your mouse over a square and click to play an X or an O.';
   
     // Create the 3x3 grid and add squares
     for (let i = 0; i < 9; i++) {
@@ -18,7 +22,7 @@ window.onload = function () {
           gameState[i] = currentPlayer;
           
           if (checkForWin(currentPlayer)) {
-            status.textContent = `Congratulations! ${currentPlayer} is the winner!`;
+            status.textContent = `Congratulations! ${currentPlayer} is the Winner!"`;
             gameOver = true;
           } else if (gameState.every(value => value !== '')) {
             status.textContent = 'It\'s a draw!';
@@ -37,6 +41,23 @@ window.onload = function () {
       square.addEventListener('mouseleave', function () {
         square.classList.remove('hover');
       });
+    }
+  
+    restartButton.addEventListener('click', function () {
+      resetGame();
+    });
+  
+    function resetGame() {
+      for (let i = 0; i < 9; i++) {
+        const square = board.children[i];
+        square.textContent = '';
+        square.classList.remove('X', 'O');
+        gameState[i] = '';
+      }
+  
+      status.textContent = 'Move your mouse over a square and click to play an X or an O.';
+      gameOver = false;
+      currentPlayer = 'X';
     }
   
     function checkForWin(player) {
@@ -63,4 +84,3 @@ window.onload = function () {
     }
   };
   
-
